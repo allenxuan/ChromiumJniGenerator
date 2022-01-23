@@ -1,0 +1,4 @@
+include ':chromium-jni-generator-jvm-compiler'
+include ':chromium-jni-generator-jvm-annotations'
+include ':demo-app'
+rootProject.name = "ChromiumJniGenerator"

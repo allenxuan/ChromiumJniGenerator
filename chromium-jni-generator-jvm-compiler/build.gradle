@@ -1,0 +1,16 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.squareup:javapoet:1.10.0"
+    implementation("com.google.guava:guava:31.0.1-jre")
+    compileOnly project(':chromium-jni-generator-jvm-annotations')
+}

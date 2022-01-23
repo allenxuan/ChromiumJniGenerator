@@ -1,0 +1,8 @@
+//
+// Created by Xuanyi Huang on 1/21/22.
+//
+
+#ifndef HROMIUMJNIGENERATOR_JNI_MAIN_H
+#define HROMIUMJNIGENERATOR_JNI_MAIN_H
+
+#endif //HROMIUMJNIGENERATOR_JNI_MAIN_H
