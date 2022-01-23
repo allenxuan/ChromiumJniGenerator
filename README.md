@@ -1,7 +1,7 @@
 # How to use the ChromiumJniGenerator
 ## 1 Dependencies
 ### 1.1 C ++ dependencies
-Copy chromium-jni-generator-native-essential and chromium-jni-generator-native-gen-script to your project
+Copy two directories: chromium-jni-generator-native-essential and chromium-jni-generator-native-gen-script to your project
 ![pic1](/screenshot/1.png)
 The chromium-jni-generator-neutral-essential directory contains the chromium_jni_generator_native_essential .h and chromium_jni_generator_native_essential.cc
 ![pic2](/screenshot/2.png)
@@ -68,7 +68,7 @@ boolean nativeFunctionBA(boolean param1, float param2);
     }
 }
 ```
-Java Annotation Processer generates auxiliary classes from @NativeMethods annotation ChromiumJniTestBJ ni.java and GEN_JNI .java
+Java Annotation Processor generates auxiliary classes ChromiumJniTestBJni.java and GEN_JNI.java from @NativeMethods
 ```java
 `ChromiumJniTestBJni.java`
 
@@ -202,7 +202,7 @@ chromium::android::JavaParamRef<jstring>& param1){
     return 3888.2f;
 }
 ```
-Finally, remember to add the chromium-jni-generator-native-essential directory to the compilation
+Remember to add the chromium-jni-generator-native-essential directory to the compilation process.
 ```cmake
 add_library(chromium_jni_generator_test_jni SHARED
         jni_main.cc
