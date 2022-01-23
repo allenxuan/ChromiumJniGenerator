@@ -19,6 +19,8 @@ allprojects {
         google()
         jcenter()
     }
+
+//    println("project-name = ${project.name}")
 }
 
 task clean(type: Delete) {
