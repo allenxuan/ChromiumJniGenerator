@@ -218,7 +218,7 @@ def JavaTypeToProxyCast(java_type):
 def WrapCTypeForDeclaration(c_type):
   """Wrap the C datatype in a JavaRef if required."""
   if re.match(RE_SCOPED_JNI_TYPES, c_type):
-    return 'const base::android::JavaParamRef<' + c_type + '>&'
+    return 'const chromium::android::JavaParamRef<' + c_type + '>&'
   else:
     return c_type
 
@@ -235,7 +235,7 @@ def JavaDataTypeToCForCalledByNativeParam(java_type):
   else:
     c_type = JavaDataTypeToC(java_type)
     if re.match(RE_SCOPED_JNI_TYPES, c_type):
-      return 'const base::android::JavaRef<' + c_type + '>&'
+      return 'const chromium::android::JavaRef<' + c_type + '>&'
     else:
       return c_type
 
@@ -1048,7 +1048,7 @@ const char kClassPath_${JAVA_CLASS}[] = \
 #ifndef ${JAVA_CLASS}_clazz_defined
 #define ${JAVA_CLASS}_clazz_defined
 inline jclass ${JAVA_CLASS}_clazz(JNIEnv* env) {
-  return base::android::LazyGetClass(env, kClassPath_${JAVA_CLASS}, \
+  return chromium::android::LazyGetClass(env, kClassPath_${JAVA_CLASS}, \
 ${MAYBE_SPLIT_NAME_ARG}&g_${JAVA_CLASS}_clazz);
 }
 #endif
@@ -1114,6 +1114,7 @@ class InlHeaderFileGenerator(object):
 #define ${HEADER_GUARD}
 
 #include <jni.h>
+#include <chromium_jni_generator_native_essential.h>
 
 ${INCLUDES}
 
@@ -1210,7 +1211,7 @@ $METHOD_STUBS
 
   def GetJavaParamRefForCall(self, c_type, name):
     return Template(
-        'base::android::JavaParamRef<${TYPE}>(env, ${NAME})').substitute({
+        'chromium::android::JavaParamRef<${TYPE}>(env, ${NAME})').substitute({
             'TYPE':
             c_type,
             'NAME':
@@ -1253,7 +1254,7 @@ $METHOD_STUBS
     if re.match(RE_SCOPED_JNI_TYPES, return_type):
       post_call = '.Release()'
       return_declaration = (
-          'base::android::ScopedJavaLocalRef<' + return_type + '>')
+          'chromium::android::ScopedJavaLocalRef<' + return_type + '>')
     profiling_entered_native = ''
     if self.options.enable_profiling:
       profiling_entered_native = '  JNI_LINK_SAVED_FRAME_POINTER;\n'
@@ -1340,7 +1341,7 @@ ${TRACE_EVENT}\
       first_param_in_call = 'clazz'
     else:
       first_param_in_declaration = (
-          ', const base::android::JavaRef<jobject>& obj')
+          ', const chromium::android::JavaRef<jobject>& obj')
       first_param_in_call = 'obj.obj()'
     params_in_declaration = self.GetCalledByNativeParamsInDeclaration(
         called_by_native)
@@ -1369,7 +1370,7 @@ ${TRACE_EVENT}\
       pre_call = ' ' + pre_call
       return_declaration = return_type + ' ret ='
       if re.match(RE_SCOPED_JNI_TYPES, return_type):
-        return_type = 'base::android::ScopedJavaLocalRef<' + return_type + '>'
+        return_type = 'chromium::android::ScopedJavaLocalRef<' + return_type + '>'
         return_clause = 'return ' + return_type + '(env, ret);'
       else:
         return_clause = 'return ret;'
@@ -1428,9 +1429,9 @@ ${FUNCTION_HEADER}
   CHECK_CLAZZ(env, ${FIRST_PARAM_IN_CALL},
       ${JAVA_CLASS}_clazz(env)${OPTIONAL_ERROR_RETURN});
 
-  jni_generator::JniJavaCallContext${CHECK_EXCEPTION} call_context;
+  chromium::android::JniJavaCallContext${CHECK_EXCEPTION} call_context;
   call_context.Init<
-      base::android::MethodID::TYPE_${METHOD_ID_TYPE}>(
+      chromium::android::MethodID::TYPE_${METHOD_ID_TYPE}>(
           env,
           clazz,
           "${JNI_NAME}",
