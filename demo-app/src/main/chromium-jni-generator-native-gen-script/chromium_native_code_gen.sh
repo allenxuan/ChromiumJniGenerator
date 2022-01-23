@@ -18,4 +18,4 @@ mkdir -p ../java/gen
 #mkdir -p gen/java
 #
 ##generate native code
-#jni_generator.py --input_file XXXXA.java --input_file XXXXB.java --output_file XXXXA.cc --output_file XXXXB.cc
+#./jni_generator.py --input_file XXXXA.java --input_file XXXXB.java --output_file gen/cpp/XXXXA.h --output_file gen/cpp/XXXXB.h
